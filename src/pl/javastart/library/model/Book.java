@@ -1,4 +1,4 @@
-package pl.javastart.model;
+package pl.javastart.library.model;
 
 public class Book {
     private String title;
