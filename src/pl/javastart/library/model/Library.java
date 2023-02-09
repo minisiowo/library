@@ -6,47 +6,27 @@ public class Library {
     private Publication[] publications = new Publication[MAX_PUBLICATIONS];
     private int publicationsNumber; // initialized with 0 automatically
 
-    public void addBook(Book book) {
-        if (publicationsNumber < MAX_PUBLICATIONS) {
-            publications[publicationsNumber] = book;
-            publicationsNumber++;
-        } else {
-            System.out.println("Maksymalna liczba książek została osiągnięta.");
+    public Publication[] getPublications() {
+        Publication[] result = new Publication[publicationsNumber];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = publications[i];
         }
+        return result;
     }
 
-    public void printBooks() {
-        int countBooks = 0;
-        for (int i = 0; i < publicationsNumber; i++) {
-            if (publications[i] instanceof Book) {
-                System.out.println(publications[i]);
-                countBooks++;
-            }
-        }
-        if (countBooks == 0) {
-            System.out.println("Brak książek w bibliotece.");
-        }
+    public void addBook(Book book) {
+        addPublication(book);
     }
 
     public void addMagazine(Magazine magazine) {
-        int countMagazines = 0;
-        for (int i = 0; i < publicationsNumber; i++) {
-            if (publications[i] instanceof Magazine) {
-                System.out.println(publications[i]);
-                countMagazines++;
-            }
-        }
-        if (countMagazines == 0) {
-            System.out.println("Maksymalna liczba magazynów została osiągnięta.");
-        }
+        addPublication(magazine);
     }
 
-    public void printMagazines() {
-        if (publicationsNumber == 0) {
-            System.out.println("Brak magazynów w bibliotece.");
+    private void addPublication(Publication publication) {
+        if (publicationsNumber >= MAX_PUBLICATIONS) {
+            throw new ArrayIndexOutOfBoundsException("Max publications exceeded " + MAX_PUBLICATIONS);
         }
-        for (int i = 0; i < publicationsNumber; i++) {
-            System.out.println(publications[i]);
-        }
+        publications[publicationsNumber] = publication;
+        publicationsNumber++;
     }
 }

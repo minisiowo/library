@@ -1,5 +1,7 @@
 package pl.javastart.library.app;
 
+import pl.javastart.library.exceptions.NoSuchOptionException;
+
 public enum Option {
     EXIT(0, "wyjście z programu"),
     ADD_BOOK(1, "dodanie nowej książki"),
@@ -28,7 +30,11 @@ public enum Option {
         return value + " - " + description;
     }
 
-    static Option createFromInt(int option) {
-        return Option.values()[option];
+    static Option createFromInt(int option) throws NoSuchOptionException {
+        try {
+            return Option.values()[option];
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            throw new NoSuchOptionException("Brak opcji o numerze " + option + ". Wprowadź ponownie: ");
+        }
     }
 }
