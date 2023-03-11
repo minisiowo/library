@@ -145,7 +145,7 @@ public class LibraryControl {
             return value + " - " + description;
         }
 
-        static Option createFromInt(int option) throws NoSuchOptionException {
+        static Option createFromInt(int option) {
             try {
                 return Option.values()[option];
             } catch (ArrayIndexOutOfBoundsException ex) {
