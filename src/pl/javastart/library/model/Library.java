@@ -1,11 +1,12 @@
 package pl.javastart.library.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Library implements Serializable {
 
-    private static final int MAX_PUBLICATIONS = 2000;
-    private Publication[] publications = new Publication[MAX_PUBLICATIONS];
+    private static final int INITIAL_CAPACITY = 1;
+    private Publication[] publications = new Publication[INITIAL_CAPACITY];
     private int publicationsNumber; // initialized with 0 automatically
 
     public Publication[] getPublications() {
@@ -16,19 +17,30 @@ public class Library implements Serializable {
         return result;
     }
 
-    public void addBook(Book book) {
-        addPublication(book);
-    }
-
-    public void addMagazine(Magazine magazine) {
-        addPublication(magazine);
-    }
-
     public void addPublication(Publication publication) {
-        if (publicationsNumber >= MAX_PUBLICATIONS) {
-            throw new ArrayIndexOutOfBoundsException("Max publications exceeded " + MAX_PUBLICATIONS);
+        if (publicationsNumber == publications.length) {
+            publications = Arrays.copyOf(publications, publications.length * 2);
         }
         publications[publicationsNumber] = publication;
         publicationsNumber++;
+    }
+
+    public boolean removePublication(Publication publication) {
+        final int notFound = -1;
+        int found = notFound;
+        int i = 0;
+        while (i < publicationsNumber && found == notFound) {
+            if (publications[i].equals(publication)) {
+                found = i;
+            } else {
+                i++;
+            }
+        }
+        if (found != notFound) {
+            System.arraycopy(publications, found + 1, publications, found, publications.length - found - 1);
+            publicationsNumber--;
+            publications[publicationsNumber] = null;
+        }
+        return found != notFound;
     }
 }

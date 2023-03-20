@@ -45,6 +45,8 @@ public class LibraryControl {
                 case PRINT_BOOKS -> printBooks();
                 case ADD_MAGAZINE -> addMagazine();
                 case PRINT_MAGAZINES -> printMagazines();
+                case REMOVE_BOOK -> removeBook();
+                case REMOVE_MAGAZINE -> removeMagazine();
                 case EXIT -> exit();
                 default -> printer.printLine("Nie ma takiej opcji, wprowadź ponownie:");
             }
@@ -86,6 +88,18 @@ public class LibraryControl {
         }
     }
 
+    private void removeBook() {
+        try {
+            Book book = dataReader.readAndCreateBook();
+            if (library.removePublication(book)) {
+                printer.printLine("Usunięto książkę.");
+            } else {
+                printer.printLine("Brak wskazanej książki.");
+            }
+        } catch (InputMismatchException e) {
+            printer.printLine("Wprowadzono niepoprawne dane.");
+        }
+    }
     private void printBooks() {
         printer.printBooks(library.getPublications());
     }
@@ -98,6 +112,19 @@ public class LibraryControl {
             printer.printLine("Nie utworzono magazynu ze względu na błędne dane.");
         } catch (ArrayIndexOutOfBoundsException ex) {
             printer.printLine("Limit biblioteki przekroczony. Nie można dodać nowego magazynu.");
+        }
+    }
+
+    private void removeMagazine() {
+        try {
+            Magazine magazine = dataReader.readAndCreateMagazine();
+            if (library.removePublication(magazine)) {
+                printer.printLine("Usunięto magazyn.");
+            } else {
+                printer.printLine("Brak wskazanego magazynu.");
+            }
+        } catch (InputMismatchException e) {
+            printer.printLine("Wprowadzono niepoprawne dane.");
         }
     }
 
@@ -122,7 +149,9 @@ public class LibraryControl {
         ADD_BOOK(1, "dodanie nowej książki"),
         ADD_MAGAZINE(2, "dodanie nowego magazynu"),
         PRINT_BOOKS(3, "wyświetl dostępne książki"),
-        PRINT_MAGAZINES(4, "wyświetl dostępne magazyny");
+        PRINT_MAGAZINES(4, "wyświetl dostępne magazyny"),
+        REMOVE_BOOK(5, "usuń wybraną książkę"),
+        REMOVE_MAGAZINE(6, "usuń wybrany magazyn");
 
         private final int value;
         private final String description;
