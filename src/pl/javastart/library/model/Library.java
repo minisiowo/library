@@ -4,17 +4,29 @@ import pl.javastart.library.exceptions.PublicationAlreadyExistsException;
 import pl.javastart.library.exceptions.UserAlreadyExistsException;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collector;
 
 public class Library implements Serializable {
 
     private Map<String, Publication> publications = new HashMap<>();
     private Map<String, LibraryUser> users = new HashMap<>();
 
+    public Collection<Publication> getSortedPublications(Comparator<Publication> comparator) {
+        // creating list to get access to sort()
+        ArrayList<Publication> list = new ArrayList<>(publications.values());
+        list.sort(comparator);
+        return list;
+    }
+
     public Map<String, Publication> getPublications() {
         return publications;
+    }
+
+    public Collection<LibraryUser> getSortedUsers(Comparator<LibraryUser> comparator) {
+        ArrayList<LibraryUser> list = new ArrayList<>(users.values());
+        list.sort(comparator);
+        return list;
     }
 
     public Map<String, LibraryUser> getUsers() {
