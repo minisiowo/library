@@ -63,6 +63,6 @@ public class Book extends Publication {
     @Override
     public String toCsv() {
         return String.format("%s;%s;%s;%d;%s;%d;%s",
-                TYPE, getTitle(), getPublisher(), getYear(), author, pages, isbn);
+                TYPE, getTitle(), getPublisher(), getYear().getValue(), author, pages, isbn);
     }
 }
