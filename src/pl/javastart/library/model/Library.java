@@ -5,7 +5,6 @@ import pl.javastart.library.exceptions.UserAlreadyExistsException;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collector;
 
 public class Library implements Serializable {
 
@@ -17,6 +16,10 @@ public class Library implements Serializable {
         ArrayList<Publication> list = new ArrayList<>(publications.values());
         list.sort(comparator);
         return list;
+    }
+
+    public Optional<Publication> findPublicationByTitle(String title) {
+        return Optional.ofNullable(publications.get(title));
     }
 
     public Map<String, Publication> getPublications() {

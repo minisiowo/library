@@ -10,7 +10,7 @@ public class Magazine extends Publication {
     private String language;
 
     public Magazine(String title, String publisher, String language, int year, int month, int day) {
-        super(year, publisher, title);
+        super(year, title, publisher);
         this.monthDay = MonthDay.of(month, day);
         this.language = language;
     }

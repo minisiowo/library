@@ -45,9 +45,19 @@ public class LibraryControl {
                 case ADD_USER -> addUser();
                 case PRINT_USERS -> printUsers();
                 case EXIT -> exit();
+                case FIND_BOOK -> findBook();
                 default -> printer.printLine("Nie ma takiej opcji, wprowadź ponownie:");
             }
         } while (option != Option.EXIT);
+    }
+
+    private void findBook() {
+        printer.printLine("Podaj tytuł wyszukiwanej publikacji: ");
+        String title = dataReader.getString();
+        String notFoundMessage = "Brak publikacji o takim tytule.";
+        library.findPublicationByTitle(title)
+                .map(Publication::toString)
+                .ifPresentOrElse(System.out::println, () -> System.out.println(notFoundMessage));
     }
 
     private Option getOption() {
@@ -171,7 +181,8 @@ public class LibraryControl {
         REMOVE_BOOK(5, "usuń wybraną książkę"),
         REMOVE_MAGAZINE(6, "usuń wybrany magazyn"),
         ADD_USER(7, "Dodaj czytelnika"),
-        PRINT_USERS(8, "Wyswietl czytelników");
+        PRINT_USERS(8, "Wyswietl czytelników"),
+        FIND_BOOK(9, "Znajdź publikację po tytule");
 
         private final int value;
         private final String description;
